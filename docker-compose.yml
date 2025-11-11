@@ -18,11 +18,21 @@ services:
     build: .
     volumes:
       - .:/app
-    ports:
-      - "8000:8000"
+      - static_volume:/app/static_root 
     depends_on:
       - db
     env_file: .env
+    networks:
+      - app-network
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/app/static_root 
+    ports:
+      - "80:80" 
+    depends_on:
+      - app
     networks:
       - app-network
 
@@ -32,3 +42,4 @@ networks:
 
 volumes:
   mysql_data:
+  static_volume: 
