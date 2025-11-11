@@ -7,7 +7,7 @@
     {% for article in latest_articles %}
         <div class="article">
             <h3><a href="{% url 'article-detail' article.pk %}">{{ article.title }}</a></h3>
-            <p>Автор: {{ article.author }} | Дата: {{ article.publication_date }}</p>
+            <p>Автор: {{ article.author.username }} | Дата: {{ article.publication_date }}</p>
         </div>
     {% empty %}
         <p>Ще немає жодної опублікованої статті.</p>

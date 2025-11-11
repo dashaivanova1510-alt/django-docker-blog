@@ -7,7 +7,7 @@
     {% for article in articles %}
         <div class="article">
             <h3><a href="{% url 'article-detail' article.pk %}">{{ article.title }}</a></h3>
-            <p>Автор: {{ article.author }} | Категорія: {{ article.category.title }}</p>
+            <p>Автор: {{ article.author.username }} | Категорія: {{ article.category.title }}</p>
         </div>
     {% empty %}
         <p>Не знайдено жодної опублікованої статті.</p>

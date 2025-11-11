@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>{{ article.title }}</h1>
-    <p><strong>Автор:</strong> {{ article.author }} | <strong>Дата:</strong> {{ article.publication_date }}</p>
+    <p><strong>Автор:</strong> {{ article.author.username }} | <strong>Дата:</strong> {{ article.publication_date }}</p>
     <p><strong>Категорія:</strong> <i class="{{ article.category.icon }}"></i> {{ article.category.title }}</p>
     
     <img src="{{ article.image }}" alt="{{ article.title }}">
@@ -15,39 +15,30 @@
     <h3>Коментарі ({{ article.comments.count }})</h3>
     {% for comment in article.comments.all %}
         <div>
-            <p><strong>{{ comment.author }}</strong> ({{ comment.publication_date }})</p>
+            <p><strong>{{ comment.get_author_name }}</strong> ({{ comment.publication_date }})</p>
             <p>{{ comment.text|linebreaks }}</p>
+            
+            <!-- Посилання на редагування та видалення -->
+            {% if user == comment.author %}
+                <a href="{% url 'edit-comment' comment.pk %}">Редагувати</a>
+            {% endif %}
+            
+            {% if user == comment.author or is_moderator %}
+                 | <a href="{% url 'delete-comment' comment.pk %}">Видалити</a>
+            {% endif %}
+            
         </div>
+        <hr>
     {% empty %}
         <p>Коментарів ще немає.</p>
     {% endfor %}
-{% endblock %}
 
-<hr>
-<h3>Коментарі ({{ article.comments.count }})</h3>
-{% for comment in article.comments.all %}
-    <div>
-        <p><strong>{{ comment.get_author_name }}</strong> ({{ comment.publication_date }})</p>
-        <p>{{ comment.text|linebreaks }}</p>
-        
-        <!-- Посилання на редагування та видалення -->
-        {% if user == comment.author or user.groups.all.0.name == 'moderator' %}
-            <a href="{% url 'edit-comment' comment.pk %}">Редагувати</a>
-        {% endif %}
-        {% if user == comment.author or user.groups.all.0.name == 'moderator' %}
-             | <a href="{% url 'delete-comment' comment.pk %}">Видалити</a>
-        {% endif %}
-        
-    </div>
     <hr>
-{% empty %}
-    <p>Коментарів ще немає.</p>
-{% endfor %}
-
-<hr>
-<h3>Залишити коментар</h3>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Відправити</button>
-</form>
+    <!-- Форма для додавання коментаря -->
+    <h3>Залишити коментар</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Відправити</button>
+    </form>
+{% endblock %}
