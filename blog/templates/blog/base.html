@@ -15,11 +15,19 @@
 </head>
 <body>
     <nav>
-        <a href="{% url 'home' %}">Головна</a>
-        <a href="{% url 'article-list' %}">Всі статті</a>
-        <a href="{% url 'category-list' %}">Категорії</a>
-        <a href="/admin/">Адмін-панель</a>
-    </nav>
+    <a href="{% url 'home' %}">Головна</a>
+    <a href="{% url 'article-list' %}">Всі статті</a>
+    <a href="{% url 'category-list' %}">Категорії</a>
+    <a href="/admin/">Адмін-панель</a>
+    <hr>
+    {% if user.is_authenticated %}
+        <span>Вітаємо, {{ user.username }}!</span>
+        <a href="{% url 'logout' %}">Вийти</a>
+    {% else %}
+        <a href="{% url 'login' %}">Увійти</a>
+        <a href="{% url 'register' %}">Реєстрація</a>
+    {% endif %}
+</nav>
     <main>
         {% block content %}
         {% endblock %}
