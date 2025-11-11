@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Мій Блог{% endblock %}</title>
+    <!-- Додамо Font Awesome для іконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+        nav { margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+        nav a { margin-right: 15px; text-decoration: none; }
+        .article { margin-bottom: 30px; }
+        img { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}">Головна</a>
+        <a href="{% url 'article-list' %}">Всі статті</a>
+        <a href="{% url 'category-list' %}">Категорії</a>
+        <a href="/admin/">Адмін-панель</a>
+    </nav>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

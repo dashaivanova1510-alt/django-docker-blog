@@ -13,12 +13,15 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - app-network
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
 
   app:
     build: .
     volumes:
       - .:/app
-      - static_volume:/app/static_root 
+      - static_volume:/app/static_root
     depends_on:
       - db
     env_file: .env
@@ -28,9 +31,9 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - static_volume:/app/static_root 
+      - static_volume:/app/static_root
     ports:
-      - "80:80" 
+      - "80:80"
     depends_on:
       - app
     networks:
@@ -42,4 +45,4 @@ networks:
 
 volumes:
   mysql_data:
-  static_volume: 
+  static_volume:

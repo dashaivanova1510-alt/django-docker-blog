@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Категорії - Мій Блог{% endblock %}
+
+{% block content %}
+    <h2>Список категорій</h2>
+    <ul>
+        {% for category in categories %}
+            <li>
+                <i class="{{ category.icon }}"></i> 
+                <strong>{{ category.title }}</strong>: {{ category.description }}
+            </li>
+        {% empty %}
+            <p>Ще не створено жодної категорії.</p>
+        {% endfor %}
+    </ul>
+{% endblock %}

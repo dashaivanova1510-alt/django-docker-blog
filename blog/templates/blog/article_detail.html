@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ article.title }} - Мій Блог{% endblock %}
+
+{% block content %}
+    <h1>{{ article.title }}</h1>
+    <p><strong>Автор:</strong> {{ article.author }} | <strong>Дата:</strong> {{ article.publication_date }}</p>
+    <p><strong>Категорія:</strong> <i class="{{ article.category.icon }}"></i> {{ article.category.title }}</p>
+    
+    <img src="{{ article.image }}" alt="{{ article.title }}">
+    
+    <div>{{ article.text|linebreaks }}</div>
+
+    <hr>
+    <h3>Коментарі ({{ article.comments.count }})</h3>
+    {% for comment in article.comments.all %}
+        <div>
+            <p><strong>{{ comment.author }}</strong> ({{ comment.publication_date }})</p>
+            <p>{{ comment.text|linebreaks }}</p>
+        </div>
+    {% empty %}
+        <p>Коментарів ще немає.</p>
+    {% endfor %}
+{% endblock %}
