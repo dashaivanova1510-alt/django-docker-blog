@@ -1,7 +1,7 @@
-from django.contrib import admin  # <-- Додайте цей імпорт
+from django.contrib import admin  
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),  # <-- Додайте цей рядок
+    path('admin/', admin.site.urls), 
     path('', include('blog.urls')),
 ]
