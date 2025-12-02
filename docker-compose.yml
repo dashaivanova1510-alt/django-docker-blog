@@ -27,13 +27,17 @@ services:
     ports:
       - "5173:5173"
     depends_on:
-      - web
+      - app
+    networks:
+      - app-network
 
   app:
     build: .
     volumes:
       - .:/app
       - static_volume:/app/static_root
+    ports:
+      - "8000:8000"
     depends_on:
       - db
     env_file: .env

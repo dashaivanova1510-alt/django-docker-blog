@@ -16,8 +16,12 @@ onMounted(() => {
     <div v-if="store.loading">Loading...</div>
     <div v-else>
       <div v-for="article in store.articles" :key="article.id">
+        
+        <img v-if="article.image" :src="article.image" style="max-width: 300px; display: block; margin-bottom: 10px; border-radius: 5px;">
+        
         <h2>{{ article.title }}</h2>
-        <p>{{ article.content }}</p>
+        <p>{{ article.text.substring(0, 150) }}...</p>
+        
         <RouterLink :to="'/articles/' + article.id">Read more</RouterLink>
         <hr>
       </div>
